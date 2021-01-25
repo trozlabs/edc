@@ -1,8 +1,6 @@
 const { readdirSync, statSync } = require('fs');
 const { resolve, parse } = require('path');
 
-module.exports = tree;
-
 /**
  * Read a file system and gather info about each file in a Map or Array of Objects 
  * containing data about each file.
@@ -25,7 +23,7 @@ module.exports = tree;
  * @param {Object} opts - optional: { toArray: false, maxDepth: 5, ignore: [] }] opts - toArray and maxDepth settings
  * @returns {Promise} Map by default or Array if toArray is true
  */
-async function tree(path = '.', opts = {}) {
+const tree = exports.tree = async function tree(path = '.', opts = {}) {
     path = resolve(path);
     opts = Object.assign({ toArray: false, depth: 1, maxDepth: 5, ignore: [] }, opts);
 

@@ -1,4 +1,4 @@
 module.exports = {
-    tree: require('./tree'),
+    fs: require('./fs'),
     object: require('./object'),
 }
