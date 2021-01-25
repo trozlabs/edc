@@ -1,6 +1,6 @@
 {
     "name": "@trozlabs/edc",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Every Day Code for JavaScript",
     "main": "src/index.js",
     "publishConfig": {
