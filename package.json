@@ -1,5 +1,5 @@
 {
-    "name": "@trozlabs/edc",
+    "name": "edc",
     "version": "0.0.1",
     "description": "Every Day Code for JavaScript",
     "main": "src/index.js",
