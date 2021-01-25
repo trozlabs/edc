@@ -38,7 +38,7 @@ You can override some default options by adding `edcConfig` to your projects pac
 Get Type metadata from any object (unless I forgot a scenario).
 
 ```javascript
-const { Type } = require('@trozlabs/edc');
+const { Type } = require('edc');
 
 var map = new Map();
     map.set('test', 1234);
@@ -110,7 +110,7 @@ EDC.Type.toBoolean(null)
 ### `EDC.util.object.query`
 
 ```javascript
-const EDC = require('@trozlabs/edc');
+const EDC = require('edc');
 const { query } = EDC.util.object;
 const reddit = require('reddit.json'); // used data from https://reddit.com/r/popular.json
 
@@ -125,7 +125,7 @@ console.log(res);
 ### `EDC.util.fs.tree`
 
 ```javascript
-const EDC = require('@trozlabs/edc');
+const EDC = require('edc');
 const { tree } EDC.util.fs;
 
 tree('../').then(map => {

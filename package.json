@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "Every Day Code for JavaScript",
     "main": "src/index.js",
+    "homepage": "https://github.com/trozlabs/edc#readme",
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
     },
