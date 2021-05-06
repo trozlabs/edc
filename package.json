@@ -1,6 +1,6 @@
 {
     "name": "edc",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Every Day Code for JavaScript",
     "main": "src/index.js",
     "homepage": "https://github.com/trozlabs/edc#readme",

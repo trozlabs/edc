@@ -45,30 +45,49 @@ var map = new Map();
 
 var values = [
     // Value Properties
-    Infinity, NaN, globalThis, undefined,
+    Infinity, 
+    NaN, 
+    globalThis, 
+    undefined,
     // Objects
-    Object, Function, Boolean, Symbol('1'), null,
-    // Error Objects
-    Error, EvalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError,
-    // Numbers and Dates
-    Number, BigInt, Math, 1, -0, -1,
-    Date, Date.now(),
-
-    Buffer.from(''),
-    new Int8Array(2),
-    new RegExp(''),
-    
+    Object, 
+    Function, 
+    Boolean, 
+    Symbol('1'), 
+    null,
     {},
     [],
     'S',
+    // Error Objects
+    Error, 
+    EvalError, 
+    RangeError, 
+    ReferenceError, 
+    SyntaxError, 
+    TypeError, 
+    URIError,
+    // Numbers and Dates
+    Number, 
+    BigInt, 
+    Math, 
+    1, 
+    -0, 
+    -1,
+    Date, 
+    Date.now(),
+    Buffer.from(''),
+    new Int8Array(2),
+    BigInt(9007199254740991),
+    
+    new RegExp(''),
+
     true,
     false,
-    
-    map,
+    new Map(),
     new Set(),
+    map,
     new WeakMap(),
     new WeakSet(),
-    BigInt(9007199254740991),
     Promise,
 ]
 

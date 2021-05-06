@@ -62,6 +62,37 @@ module.exports = class Type {
     static weakmap = 'WEAKMAP';
     static weakset = 'WEAKSET';
     
+    static Object = 'OBJECT';
+    static Global = 'GLOBAL';
+    static Null = 'NULL';
+    static Undefined = 'UNDEFINED';
+    static Boolean = 'BOOLEAN';
+    static Function = 'FUNCTION';
+    static Arguments = 'ARGUMENTS';
+    static Promise = 'PROMISE';
+    static Symbol = 'SYMBOL';
+    static Error = 'ERROR';
+    static EvalError = 'EVALERROR';
+    static RangeError = 'RANGEERROR';
+    static ReferenceError = 'REFERENCEERROR';
+    static SyntaxError = 'SYNTAXERROR';
+    static TypeError = 'TYPEERROR';
+    static UriError = 'URIERROR';
+    static Number = 'NUMBER';
+    static NaN = 'NAN';
+    static BigInt = 'BIGINT';
+    static Math = 'MATH';
+    static Date = 'DATE';
+    static Array = 'ARRAY';
+    static Uint8array = 'UINT8ARRAY';
+    static Int8array = 'INT8ARRAY';
+    static Regexp = 'REGEXP';
+    static String = 'STRING';
+    static Map = 'MAP';
+    static Set = 'SET';
+    static Weakmap = 'WEAKMAP';
+    static Weakset = 'WEAKSET';
+    
 
     static get(obj) {
         const tag               = (obj && obj.toString && obj.toString() || obj);
@@ -143,6 +174,8 @@ module.exports = class Type {
             && !Type.isString(obj)
             && !Type.isArray(obj)
             && !Type.isBoolean(obj)
+            && !Type.isMap(obj)
+            && !Type.isSet(obj)
             && !Type.isNull(obj)
             && !Type.isUndefined(obj)
         ;
