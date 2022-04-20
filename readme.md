@@ -1,161 +1,250 @@
-# EDC (Every Day Code); Mildly Opinionated JavaScript Utilities
+# EDC (Every Day Code)
 
 ```
-npm i trozlabs/edc
+npm i @trozlabs/edc
+```
+
+## Type Class
+
+```js
+
+    const { Type } = require('@trozlabs/edc');
+
+    /**************************************************************************
+     * Type.instanceOf(obj)
+     **************************************************************************/
+
+    Type.instanceOf(async function myAsyncFunction() {}, 'myAsyncFunction') // true
+    Type.instanceOf([]) // true
+    Type.instanceOf(new SomeExampleClass(), 'Array') // false
+    Type.instanceOf(new SomeExampleClass(), 'SomeExampleClass') // true
+    Type.instanceOf(true, 'Boolean') // true
+
+    /**************************************************************************
+     * Type.getName(obj)
+     **************************************************************************/
+
+    Type.getName(async function myAsyncFunction() {}) // myAsyncFunction
+    Type.getName([]) // Array
+    Type.getName(new SomeExampleClass()) // SomeExampleClass
+    Type.getName(SomeExampleClass) // SomeExampleClass
+    Type.getName(true) // Boolean
+
+    /**************************************************************************
+     * Type.get(obj)
+     **************************************************************************/
+
+    Type.get(async function myAsyncFunction() {}) // AsyncFunction
+    Type.get([]) // Array
+    Type.get(new SomeExampleClass()) // Class
+    Type.get(SomeExampleClass) // Class
+    Type.get(true) // Boolean
+
+    /**************************************************************************
+     * Type.isSimpleObject(obj)
+     **************************************************************************/
+
+    Type.isSimpleObject(null) // false
+    Type.isSimpleObject(undefined) // false
+    Type.isSimpleObject([]) // false
+    Type.isSimpleObject(new Map()) // false
+    Type.isSimpleObject({ key: 'val' }) // true
+
+    /**************************************************************************
+     * Type.getMeta(obj)
+     **************************************************************************/
+
+    Type.getMeta(async function myAsyncFunction() {}) 
+    // { name: myAsyncFunction, type: AsyncFunction, primitive: function, empty: false }
+    Type.getMeta([]) 
+    // { name: Array, type: Array, primitive: object, empty: false, value: [] }
+    Type.getMeta(new SomeExampleClass()) 
+    // { name: SomeExampleClass, type: Class, primitive: object, empty: false, value: {} }
+    Type.getMeta(SomeExampleClass) 
+    // { name: SomeExampleClass, type: Class, primitive: object, empty: false, value: {} }
+    Type.getMeta(true) 
+    // { name: Boolean, type: Boolean, primitive: boolean, empty: false, value: true }
+
+    /**************************************************************************
+     * Type.is<Type>(obj)
+     **************************************************************************/
+
+    Type.isSymbol(someVar) // true/false
+    Type.isBoolean(someVar) // true/false
+    Type.isDate(someVar) // true/false
+    Type.isNumber(someVar) // true/false
+    Type.isInteger(someVar) // true/false
+    Type.isFloat(someVar) // true/false
+    Type.isBigInt(someVar) // true/false
+    Type.isPrime(someVar) // true/false
+    Type.isClass(someVar) // true/false
+    Type.isFunction(someVar) // true/false
+    Type.isAsyncFunction(someVar) // true/false
+    Type.isGeneratorFunction(someVar) // true/false
+    Type.isArguments(someVar) // true/false
+    Type.isPromise(someVar) // true/false
+    Type.isWorker(someVar) // true/false
+    Type.isString(someVar) // true/false
+    Type.isUndefined(someVar) // true/false
+    Type.isNull(someVar) // true/false
+    Type.isObject(someVar) // true/false
+    Type.isMap(someVar) // true/false
+    Type.isSet(someVar) // true/false
+    Type.isArray(someVar) // true/false
+    Type.isInt8Array(someVar) // true/false
+    Type.isUint8Array(someVar) // true/false
+    Type.isUint8ClampedArray(someVar) // true/false
+    Type.isInt16Array(someVar) // true/false
+    Type.isUint16Array(someVar) // true/false
+    Type.isInt32Array(someVar) // true/false
+    Type.isUint32Array(someVar) // true/false
+    Type.isFloat32Array(someVar) // true/false
+    Type.isFloat64Array(someVar) // true/false
+    Type.isBigInt64Array(someVar) // true/false
+    Type.isBigUint64Array(someVar) // true/false
+    Type.isError(someVar) // true/false
+    Type.isEmpty(someVar) // true/false
+    Type.isSimpleObject(someVar) // true/false
+    Type.isIterable(someVar) // true/false
+    Type.isBooleanLike(someVar) // true/false
+```
+
+## Text Class
+
+```js
+
+    const { Text } = require('@trozlabs/edc');
+
+    Text.toCamel('Text to Transform') // textToTransform
+    Text.toSnake('textToTransform')   // text_to_transform
+    Text.toKebab('text_to_transform') // text-to-transform
+    Text.toUpper('text-to-transform') // TEXT-TO-TRANSFORM
+    Text.toLower('TEXT-TO-TRANSFORM') // text-to-transform
+    Text.toTitle('text-to-transform') // Text To Transform
+    Text.toWords('textToTransform')   // [ 'Text', 'To', 'Transform' ]
+
 ```
 
 
-## Optional package.json `edcConfig` Object
+## objectRemap()
 
-You can override some default options by adding `edcConfig` to your projects package.json file. Below shows current default config values. Only the options you want to change need to be included.
-
-```json
-{
-    //...
-
-    "edcConfig": {
-        "DEBUG"         : true,
-        "DEFAULT_PAGE"  : 1,
-        "DEFAULT_LIMIT" : 25,
-        "PAGING_PARAMS" : [ "sort", "dir", "limit", "page" ],
-        "FORBIDDEN"     : [ "not-even-in-code" ],
-        "REDACTED"      : [ "password" ],
-        "LASTFOUR"      : [ "ssn", "cc", ],
-        "EMPTY"         : "",
-        "SPACE"         : " ",
-        "BREAK"         : "\n",
-        "RETURN"        : "\r",
-        "EOL"           : "\n",
-        "TAB"           : "    ",
+```js
+    const square = {
+        ID: 1,
+        CAT: 'products',
+        NAME: 'A',
+        DESCRIPTION: 'First Object',
+        CREATED_DATE: new Date().toJSON(),
+        UPDATED_DATE: new Date().toJSON()
     }
-}
+
+    // but you want it to look like this...
+    const newObject = objectRemap(square, {
+        id: 'ID',
+        category: 'CAT',
+        slug: [ 'ID', '-', 'CAT', '_', 'NAME' ],
+        name: 'NAME',
+        desc: 'DESCRIPTION',
+        createdAt: 'CREATED_DATE',
+        updatedAt: 'UPDATED_DATE'
+    });
+    console.log(newObject);
 ```
 
-### Work in Progress:
-
-## `EDC.Type`
-
-Get Type metadata from any object (unless I forgot a scenario).
-
-```javascript
-const { Type } = require('edc');
-
-var map = new Map();
-    map.set('test', 1234);
-
-var values = [
-    // Value Properties
-    Infinity, 
-    NaN, 
-    globalThis, 
-    undefined,
-    // Objects
-    Object, 
-    Function, 
-    Boolean, 
-    Symbol('1'), 
-    null,
-    {},
-    [],
-    'S',
-    // Error Objects
-    Error, 
-    EvalError, 
-    RangeError, 
-    ReferenceError, 
-    SyntaxError, 
-    TypeError, 
-    URIError,
-    // Numbers and Dates
-    Number, 
-    BigInt, 
-    Math, 
-    1, 
-    -0, 
-    -1,
-    Date, 
-    Date.now(),
-    Buffer.from(''),
-    new Int8Array(2),
-    BigInt(9007199254740991),
-    
-    new RegExp(''),
-
-    true,
-    false,
-    new Map(),
-    new Set(),
-    map,
-    new WeakMap(),
-    new WeakSet(),
-    Promise,
-]
-
-for (obj of values) {
-    const { alias, primitive, type, value, size, length } = Type.get(obj)
-    console.log(value);
-    console.table({ results: { alias, primitive, type, length: (size || length) } });
-}
+Example result:
+```js
+    {
+        id: 1,
+        category: 'products',
+        slug: '1-products_A',
+        name: 'A',
+        desc: 'First Object',
+        createdAt: '2022-04-20T21:58:20.970Z',
+        updatedAt: '2022-04-20T21:58:20.970Z'
+    }
 ```
 
+### objectQuery()
 
-### `EDC.Type.toBoolean`
+```js
+    const { objectQuery } = require('@trozlabs/edc/functions');
+    const object = require('data.json'); // used data from https://reddit.com/r/popular.json
 
-Cast to a boolean (more intuitive than what is truthy be default JS IMO)
-
-```javascript
-// True
-EDC.Type.toBoolean('Y')
-EDC.Type.toBoolean('y')
-EDC.Type.toBoolean('yes')
-EDC.Type.toBoolean(1)
-EDC.Type.toBoolean({ 1: null })
-
-// False
-EDC.Type.toBoolean({ }) // empty objects return false as they should. 
-EDC.Type.toBoolean('')
-EDC.Type.toBoolean(' ')
-EDC.Type.toBoolean('no')
-EDC.Type.toBoolean('N')
-EDC.Type.toBoolean(0)
-EDC.Type.toBoolean(-1)
-EDC.Type.toBoolean(undefined)
-EDC.Type.toBoolean(null)
+    // search by key and/or value either are optional.
+    objectQuery(object, {
+        // property: 'permalink',
+        value: '/r/science/comments/u7urps/donating_blood_regularly_can_reduce_toxic_forever/'
+    });
 ```
 
-
-## `EDC.util`
-
-### `EDC.util.object.query`
-
-```javascript
-const EDC = require('edc');
-const { query } = EDC.util.object;
-const reddit = require('reddit.json'); // used data from https://reddit.com/r/popular.json
-
-var res = query(reddit, {
-    property: 'subreddit_subscribers',
-    value: 1310549
-});
-console.log(res);
+Example result:
+```js
+    [
+        {
+            depth: 5,
+            key: 'permalink',
+            val: '/r/science/comments/u7urps/donating_blood_regularly_can_reduce_toxic_forever/',
+            path: [ '.data', '.children', '[12]', '.data', '.permalink' ],
+            namespace: '.data.children[12].data.permalink',
+            context: { the object result was contained in }
+        }
+    ]
 ```
 
-
-### `EDC.util.fs.tree`
+### fsTree()
 
 ```javascript
-const EDC = require('edc');
-const { tree } EDC.util.fs;
+    const { fsTree } = require('@trozlabs/edc/functions');
 
-tree('../').then(map => {
-    console.log(map);
-});
+    fsTree('../').then(map => {
+        console.log(map);
+    });
 
-tree('.', {
-   ignore: ['node_modules'],
-   toArray: true,
-   maxDepth: 3
-}).then(array => {
-   console.log(array);
-});
+    fsTree('.', {
+    ignore: ['node_modules'],
+    toArray: true,
+    maxDepth: 3
+    }).then(array => {
+    console.log(array);
+    });
+```
+
+Example result:
+```js
+    [
+        {
+            dev: 16777234,
+            mode: 16877,
+            nlink: 6,
+            uid: 501,
+            gid: 20,
+            rdev: 0,
+            blksize: 4096,
+            ino: 56697446,
+            size: 192,
+            blocks: 0,
+            atimeMs: 1650489395814.3723,
+            mtimeMs: 1650489331697.1792,
+            ctimeMs: 1650489331697.1792,
+            birthtimeMs: 1650413396244.5251,
+            atime: 2022-04-20T21:16:35.814Z,
+            mtime: 2022-04-20T21:15:31.697Z,
+            ctime: 2022-04-20T21:15:31.697Z,
+            birthtime: 2022-04-20T00:09:56.245Z,
+            root: '/',
+            dir: '/absolute/path/to/edc',
+            base: 'test',
+            ext: '',
+            name: 'test',
+            index: 7,
+            depth: 1,
+            type: 'directory',
+            pathname: '/absolute/path/to/edc/test',
+            total: 4,
+            files: [ [Object], [Object], [Object], [Object] ]
+        },
+        {...}, 
+        {...}, 
+        ...
+    ]
 ```

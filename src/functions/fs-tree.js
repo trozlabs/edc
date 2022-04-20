@@ -6,12 +6,12 @@ const { resolve, parse } = require('path');
  * containing data about each file.
  * 
  * @example
- *  tree('../').then(map => {
+ *  fsTree('../').then(map => {
  *      console.log(map);
  *  });
  * 
  * @example
- *  tree('.', {
+ *  fsTree('.', {
  *      ignore: ['node_modules'],
  *      toArray: true,
  *      maxDepth: 3
@@ -23,7 +23,7 @@ const { resolve, parse } = require('path');
  * @param {Object} opts - optional: { toArray: false, maxDepth: 5, ignore: [] }] opts - toArray and maxDepth settings
  * @returns {Promise} Map by default or Array if toArray is true
  */
-const tree = exports.tree = async function tree(path = '.', opts = {}) {
+const fsTree = module.exports = async function fsTree(path = '.', opts = {}) {
     path = resolve(path);
     opts = Object.assign({ toArray: false, depth: 1, maxDepth: 5, ignore: [] }, opts);
 
@@ -43,7 +43,7 @@ const tree = exports.tree = async function tree(path = '.', opts = {}) {
             const full  = resolve(path, file);
             const stats = await statSync(full);
             const isDir = stats.isDirectory();
-            const children = isDir && !maxDepthReached ? await tree(full, opts) : null;
+            const children = isDir && !maxDepthReached ? await fsTree(full, opts) : null;
             const meta = Object.assign({}, stats, parse(full), {
                 index: index++,
                 depth: currentDepth,
@@ -63,6 +63,6 @@ const tree = exports.tree = async function tree(path = '.', opts = {}) {
     } catch(e) {
         console.error('Error:', e.message);
     }
-    
+
     return list;
 }

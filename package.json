@@ -1,17 +1,26 @@
 {
-    "name": "edc",
-    "version": "0.0.2",
+    "name": "@trozlabs/edc",
+    "version": "0.1.0",
     "description": "Every Day Code for JavaScript",
     "main": "src/index.js",
     "homepage": "https://github.com/trozlabs/edc#readme",
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
-    },
     "scripts": {
         "start": "nodemon ./test",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "node test"
     },
-    "keywords": ["EDC", "Utilities", "JavaScript"],
+    "keywords": [
+        "edc",
+        "utilities",
+        "types",
+        "text",
+        "object search",
+        "re-map",
+        "remap",
+        "file tree"
+    ],
     "author": "Shayne Trosdahl <shayne@trozdol.com>",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
 }
