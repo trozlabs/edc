@@ -1,8 +1,11 @@
-module.exports = class EDC {
-    constructor() { throw new Error('EDC is a singleton') }
+const { Type, Text } = require('./statics');
+const { objectQuery, objectRemap, fsTree } = require('./functions');
 
-    static Type = require('./statics/type')
-    static Text = require('./statics/text')
-    
-    static functions = require('./functions')
+module.exports = {
+    Type,
+    Text,
+
+    objectQuery,
+    objectRemap,
+    fsTree,
 }
